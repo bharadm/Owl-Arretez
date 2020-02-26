@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Rubik Light'), local('Rubik-Light'), url(../fonts/iJWHBXyIfDnIV7Fqj2mT8WU.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Rubik'), local('Rubik-Regular'), url(../fonts/iJWKBXyIfDnIV7nPrXk.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Rubik Medium'), local('Rubik-Medium'), url(../fonts/iJWHBXyIfDnIV7EyjmmT8WU.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Rubik Bold'), local('Rubik-Bold'), url(../fonts/iJWHBXyIfDnIV7F6iGmT8WU.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Rubik Black'), local('Rubik-Black'), url(../fonts/iJWHBXyIfDnIV7FCimmT8WU.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Satisfy';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Satisfy Regular'), local('Satisfy-Regular'), url(../fonts/rP2Hp2yn6lkG50LoCZOIGA.ttf) format('truetype');
+}
