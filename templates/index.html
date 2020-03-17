@@ -58,7 +58,7 @@
     <!-- END nav -->
 
     <section class="home-slider js-fullheight owl-carousel">
-      <div class="slider-item js-fullheight" style="background-image:url(images/bg_1.jpg);">
+      <div class="slider-item js-fullheight" style="background-image:url( {% static 'images/bg_1.jpg' %} );">
       	<div class="overlay"></div>
         <div class="container">
           <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -71,7 +71,7 @@
         </div>
       </div>
 
-      <div class="slider-item js-fullheight" style="background-image:url(images/bg_2.jpg);">
+      <div class="slider-item js-fullheight" style="background-image:url( {% static 'images/bg_2.jpg' %});">
       	<div class="overlay"></div>
         <div class="container">
           <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
@@ -88,45 +88,19 @@
     <section class="ftco-section bg-light">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-3 d-flex align-items-stretch">
+          {% comment %} Loop for initial row {% endcomment %}
+          {% for products in Product_list %}
+          <div class="col-md-3 d-flex align-items-stretch">
 						<div class="offer-deal text-center">
 							<div class="img" style="background-image: url(images/classes-6.jpg);"></div>
 							<div class="text mt-4">
-								<h3 class="mb-4">Power Yoga</h3>
-								<p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								<h3 class="mb-4">{{products.ProductName}}</h3>
+								<p class="mb-5">{{products.ProductShortDesc}}</p>
 								<p><a href="#" class="btn btn-white px-4 py-3"> Learn more <span class="ion-ios-arrow-round-forward"></span></a></p>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-3 d-flex align-items-stretch">
-						<div class="offer-deal text-center">
-							<div class="img" style="background-image: url(images/classes-1.jpg);"></div>
-							<div class="text mt-4">
-								<h3 class="mb-4">Community Class</h3>
-								<p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-								<p><a href="#" class="btn btn-white px-4 py-3"> Learn more <span class="ion-ios-arrow-round-forward"></span></a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 d-flex align-items-stretch">
-						<div class="offer-deal text-center">
-							<div class="img" style="background-image: url(images/classes-7.jpg);"></div>
-							<div class="text mt-4">
-								<h3 class="mb-4">Foundation Yoga</h3>
-								<p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-								<p><a href="#" class="btn btn-white px-4 py-3"> Learn more <span class="ion-ios-arrow-round-forward"></span></a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 d-flex align-items-stretch">
-						<div class="offer-deal text-center">
-							<div class="img" style="background-image: url(images/classes-2.jpg);"></div>
-							<div class="text mt-4">
-								<h3 class="mb-4">Prenatal Yoga</h3>
-								<p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-								<p><a href="#" class="btn btn-white px-4 py-3"> Learn more <span class="ion-ios-arrow-round-forward"></span></a></p>
-							</div>
-						</div>
+					
+          {% endfor %}
 					</div>
 				</div>
 			</div>
@@ -140,7 +114,7 @@
           </div>
         </div>
     		<div class="row">
-    			<div class="col-md-4">
+    			{% comment %} <div class="col-md-4">
     				<div class="services-2 ftco-animate d-flex w-100">
 							<div class="icon d-flex justify-content-center align-items-center order-md-last">
 								<span class="flaticon-meditation"></span>
@@ -177,10 +151,10 @@
 								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 							</div>
 						</div>
-    			</div>
+    			</div> {% endcomment %}
 
-    			<div class="col-md-4 d-flex">
-    				<div class="img img-services w-100" style="background-image: url(images/services.jpg);"></div>
+    			<div class="col-md-8 d-flex">
+    				<div class="img img-services w-100" style="background-image: url( {% static 'images/services.jpg' %});"></div>
     			</div>
 
     			<div class="col-md-4">
