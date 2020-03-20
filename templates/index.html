@@ -114,7 +114,7 @@
           </div>
         </div>
     		<div class="row">
-    			{% comment %} <div class="col-md-4">
+    			<div class="col-md-4">
     				<div class="services-2 ftco-animate d-flex w-100">
 							<div class="icon d-flex justify-content-center align-items-center order-md-last">
 								<span class="flaticon-meditation"></span>
@@ -151,7 +151,7 @@
 								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
 							</div>
 						</div>
-    			</div> {% endcomment %}
+    			</div>
 
     			<div class="col-md-8 d-flex">
     				<div class="img img-services w-100" style="background-image: url( {% static 'images/services.jpg' %});"></div>
@@ -409,7 +409,8 @@
     	</div>
     </section>
 		
-
+    {% comment 'Comments section component' %}
+    {% endcomment %}
     <section class="ftco-section testimony-section">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
@@ -632,6 +633,8 @@
       </div>
     </section>
 
+    {% comment 'about item below images' %}
+    {% endcomment %}
 		<section class="ftco-gallery ftco-section">
     	<div class="container-fluid px-md-5">
     		<div class="row justify-content-center mb-5 pb-3">
@@ -775,24 +778,5 @@
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
-
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-  <script src="{% static 'js/aos.js' %}"></script>
-  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
-  <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
-  <script src="{% static 'js/scrollax.min.js' %}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="{% static 'js/google-map.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-    
   </body>
 </html>
