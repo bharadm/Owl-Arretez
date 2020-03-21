@@ -2,8 +2,8 @@
 It's an ecommerce factory with django - python integration for educational purpose. Technologies and other informations will be added in readme.md file. Stay tuned! 
 
 # Credits
-Favicon: https://www.flaticon.com/free-icon/owl_1864521?term=owl&page=1&position=16
-Template: https://colorlib.com/wp/template/meditative/
+* Favicon: https://www.flaticon.com/free-icon/owl_1864521?term=owl&page=1&position=16
+* Template: https://colorlib.com/wp/template/meditative/
 
 # Changelog 21-03-2020
 * Added local view to provide inheritance concept to other templates following particular navigation
