@@ -1,0 +1,28 @@
+[general]
+webdriver = 
+a-url = https://www.amazon.in/s?k=mobiles
+main-div = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]
+asin-id = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[1]
+href-url = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[#]/div/span/div/div/div[2]/div[1]/div/div/span/a
+
+[image-path]
+image1 = //*[@id="a-autoid-3-announce"]/img
+image2 = //*[@id="a-autoid-4-announce"]/img
+image3 = //*[@id="a-autoid-5-announce"]/img
+image4 = //*[@id="a-autoid-6-announce"]/img
+
+[product-details]
+p-id = //*[@id="prodDetails"]/div/div[2]/div[1]/div[2]/div/div/table/tbody/tr[1]/td[2]
+p-title = //*[@id="productTitle"]
+p-short-des = //*[@id="feature-bullets"]/ul
+p-long-des = //*[@id="prodDetails"]/div/div[1]/div[1]/div[2]/div/div/table/tbody
+p-long-des-tr = //*[@id="prodDetails"]/div/div[1]/div[1]/div[2]/div/div/table/tbody/tr[#]/td[*]
+p-qna = //*[@id="ask-btf-container"]/div/div/div[2]/span/div
+p-qna-before-q = //*[@id="ask-btf-container"]/div/div/div[2]/span/div/div[#]/div/div[2]
+p-qna-q = //*[@id="#"]/div/div[2]/a/span
+p-qna-text = //*[@id="ask-btf-container"]/div/div/div[2]/span/div/div[#]/div/div[2]/div[2]/div/div[2]/span[1]
+p-qna-longtext = //*[@id="ask-btf-container"]/div/div/div[2]/span/div/div[#]/div/div[2]/div[2]/div/div[2]/span[1]/span[2]
+p-cf = //*[@id="cm-cr-dp-review-list"]
+p-cf-name = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[1]/a/div[2]/span
+p-cf-device = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[3]/span[1]
+p-cf-comments = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[4]/span/div/div[1]/span
