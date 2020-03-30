@@ -1,6 +1,6 @@
 [general]
 webdriver = E:\Codecs\Office works\chromedriver_win32_v80\chromedriver.exe
-a-url = https://www.amazon.in/s?k=mobiles
+a-url = https://www.amazon.in/s?k=mobiles&page=#&ref=sr_pg_#
 asin-id = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[#]
 href-url = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[#]/div/span/div/div/div[2]/div[1]/div/div/span/a
 

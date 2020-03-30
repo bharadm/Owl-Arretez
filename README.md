@@ -5,6 +5,11 @@ It's an ecommerce factory with django - python integration for educational purpo
 * Favicon: https://www.flaticon.com/free-icon/owl_1864521?term=owl&page=1&position=16
 * Template: https://colorlib.com/wp/template/meditative/
 
+# Changelog 30-03-2020
+* Added support for database for PostgreSQL and local database
+* Added extras/data-setup which acts as a script for adding device into product table
+* Common model changes as per psycopg2 has been implemented ( Python 3.8.x environment is not supported)
+
 # Changelog 21-03-2020
 * Added local view to provide inheritance concept to other templates following particular navigation
 * Added footer and navigation as per website.
