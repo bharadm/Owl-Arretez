@@ -5,6 +5,14 @@ It's an ecommerce factory with django - python integration for educational purpo
 * Favicon: https://www.flaticon.com/free-icon/owl_1864521?term=owl&page=1&position=16
 * Template: https://colorlib.com/wp/template/meditative/
 
+# Technologies
+* Database: PostgreSQL and localdb
+* Frameworks: Django, pycorg2, beautifulsoup4, selenium etc,.
+
+# Changelog 04-04-2020
+* Added Item-list support to get all items on searching by categories ( Future Search product )
+* Retrieving from database into template has been implemented.
+
 # Changelog 30-03-2020
 * Added support for database for PostgreSQL and local database
 * Added extras/data-setup which acts as a script for adding device into product table

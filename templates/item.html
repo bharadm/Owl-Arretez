@@ -1,4 +1,5 @@
 {% extends 'exts.html' %}
+{% load custom_filter %}
 {% load static %}
 {% block body %}
 <section class="ftco-section">
@@ -11,13 +12,13 @@
 		<div class="row">
 			<div class="col-md-3 ftco-animate">
 				<a href="{% static 'images/gallery-1.jpg' %}" class="gallery image-popup img d-flex align-items-center"
-					style="background-image: url({% static 'images/gallery-1.jpg' %});">
+					style="background-image: url({{prod_details.ProductImage1}});">
 					<div class="icon mb-4 d-flex align-items-center justify-content-center">
 						<span class="fa fa-camera-retro fa-lg"></span>
 					</div>
 				</a>
 				<a href="{% static 'images/gallery-2.jpg' %}" class="gallery image-popup img d-flex align-items-center"
-					style="background-image: url({% static 'images/gallery-2.jpg' %});">
+					style="background-image: url({{prod_details.ProductImage2}});">
 					<div class="icon mb-4 d-flex align-items-center justify-content-center">
 						<span class="fa fa-camera-retro fa-lg"></span>
 					</div>
@@ -26,13 +27,13 @@
 
 			<div class="col-md-3 ftco-animate">
 				<a href="{% static 'images/gallery-3.jpg' %}" class="gallery image-popup img d-flex align-items-center"
-					style="background-image: url({% static 'images/gallery-3.jpg' %});">
+					style="background-image: url({{prod_details.ProductImage3}});">
 					<div class="icon mb-4 d-flex align-items-center justify-content-center">
 						<span class="fa fa-camera-retro fa-lg"></span>
 					</div>
 				</a>
 				<a href="{% static 'images/gallery-4.jpg' %}" class="gallery image-popup img d-flex align-items-center"
-					style="background-image: url({% static 'images/gallery-4.jpg' %});">
+					style="background-image: url({{prod_details.ProductImage4}});">
 					<div class="icon mb-4 d-flex align-items-center justify-content-center">
 						<span class="fa fa-camera-retro fa-lg"></span>
 					</div>
@@ -43,12 +44,13 @@
 				<div class="services-2 ftco-animate d-flex w-100">
 
 					<div class="text text-left pl-4">
-						<h4>Product: </h4>
+						<h4>{{prod_details.ProductName}} </h4>
 						<hr>
-						<p> Product Name : Name </p>
-						<p> Product Price : MRP</p>
-						<p> Product Price : Price</p>
-
+						{% if prod_details.ProductPrice|length > 0 %}
+						<p> Product Price : {{prod_details.ProductPrice}}</p>
+						{% else %}
+						<p> Product Price : <b>N/A</p>
+						{% endif %}
 					</div>
 				</div>
 
@@ -57,10 +59,14 @@
 					<div class="text text-left pl-4">
 						<h4>Description: </h4>
 						<hr>
-						<p> Product Description Short </p>
+						<ul>
+							{% for f_values in features %}
+							<li> {{f_values}} </li>
+							{% endfor %}
+						</ul>
 					</div>
 				</div>
-				<div class="services-2 ftco-animate d-flex w-100">
+				{% comment %} <div class="services-2 ftco-animate d-flex w-100">
 
 					<div class="text text-left pl-4">
 						<h4> Product Description in Detail: </h4>
@@ -68,7 +74,7 @@
 						<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
 						</p>
 					</div>
-				</div>
+				</div> {% endcomment %}
 				{% comment %} <div class="services-2 ftco-animate d-flex w-100">
 
 					<div class="text text-left pl-4">
@@ -83,27 +89,63 @@
 </section>
 <hr>
 
-<section class="ftco-section testimony-section">
+<section class="testimony-section">
 	<div class="container">
 		<div class="row mb-5">
 			<div class="col-md-10 heading-section ftco-animate text-left">
-				<h2 class="mb-0 heading-section ftco-animate"> Information </h3>
-					<h3 class="subheading">Technical Details</h3>
+				<h2 class="mb-0 heading-section ftco-animate"> Information </h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-8">
-				<table class="table">
+				<h4 class="heading-section">Technical Details</h4>
+				<hr>
+				<table>
 					<tbody>
-						<tr>
-							<td> # </td>
-							<td> Left part 1</td>
-							<td> Right part 1</td>
+					{% for e_key, e_value in e_features.items %}
+						<tr class="border border-dark">
+							<td class="list-group-item-secondary"> {{e_key}}</td>
+							<td style="margin-left: 2 px"> {{e_value}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="col-lg-*">
+				<h4 class="heading-section">Additional Information</h4>	
+				<hr>			
+				<table>
+					<tbody>
+						<tr class="border border-dark">
+							<td class="list-group-item-secondary"> Date of updation </td>
+							<td>{{prod_details.ProductUpdateDate}}</td>
 						</tr>
 					</tbody>
 				</table>
-
+		</div>
+	</div>
+</section>
+<hr>
+{% comment 'QNA section component' %}
+{% endcomment %}
+<section class="testimony-section">
+	<div class="container">
+		<div class="row mb-5">
+			<div class="col-md-10 heading-section ftco-animate text-left">
+				<h2 class="mb-0 heading-section ftco-animate">Question and Answers </h2>
+				<h3 class="subheading">Honest reviews...</h3>
 			</div>
+		</div>
+		<div class="row">
+			{% for pqa_item in p_qna %}
+			<div class="col-md-3 border-info">
+				{% for pqa_q, pqa_a in pqa_item.items %}
+				<div class="row" style="padding:10px">
+					<p> <strong>{{pqa_q|capfirst}}:</strong> <i> {{pqa_a}} </i></p>
+				</div>
+				{% endfor %}
+			</div>
+			{% endfor %}
 		</div>
 	</div>
 </section>

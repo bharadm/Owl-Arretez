@@ -1,0 +1,39 @@
+{% extends 'exts.html' %}
+{% load static %}
+
+{% block body %}
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            {% for product_item in product_list %}
+            <div class="col-md-3 d-flex align-items-stretch border" style="padding : 10px">
+                <div class="offer-deal text-center">
+                    {% if product_item.ProductImage %}
+                    <a href="/item?id={{product_item.ProductId}}"><img src="{{product_item.ProductImage}}" alt="mobile" style="width: 105px; height:218 px"></img></a>
+                    {% else %}
+                    <img src="https://m.media-amazon.com/images/I/91jogajZDHL._AC_UY654_FMwebp_QL65_.jpg" alt="mobile"
+                        style="width: 105px; height:218 px"></img>
+                    {% endif %}
+                    {% comment %} <img src="{{product_item.ProductImage}}" alt="mobile"
+                        style="width: 105px; height:218 px"></img> {% endcomment %}
+                    <div class="text mt-4">
+                        {% if product_item.ProductName|length > 55 %}
+                        <h5 class="mb-5">{{product_item.ProductName|slice:"0:52"}}...</h5>
+                        {% else %}
+                        <h5 class="mb-4">{{product_item.ProductName}}</h5>
+                        {% endif %}
+                        {% if product_item.ProductPrice %}
+                        <p class="mb-5">{{product_item.ProductPrice}}</p>
+                        {% else %}
+                        <p class="mb-5">Item not available</p>
+                        {% endif %}
+                        {% comment %} <p class="mb-5"></p> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock%}
