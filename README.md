@@ -9,6 +9,11 @@ It's an ecommerce factory with django - python integration for educational purpo
 * Database: PostgreSQL and localdb
 * Frameworks: Django, pycorg2, beautifulsoup4, selenium etc,.
 
+# Changelog 11-04-2020
+* Added support for User Registration and login.accordion
+* Few alternations to navigation has been imposed.
+* Filtering of blocks and new templates added.
+
 # Changelog 04-04-2020
 * Added Item-list support to get all items on searching by categories ( Future Search product )
 * Retrieving from database into template has been implemented.

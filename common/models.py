@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Order (models.Model):
+class Order(models.Model):
     OrderId = models.CharField(max_length=255)
     OrderUserId = models.CharField(max_length=255)
     OrderAmount = models.CharField(max_length=255)
@@ -20,7 +20,7 @@ class Order (models.Model):
     OrderShipped = models.BooleanField(default = False)
     OrderTrackingNumber = models.CharField(max_length=255)
 
-class Product (models.Model):
+class Product(models.Model):
     ProductId = models.CharField(max_length=255)
     ProductPrice = models.CharField(max_length=255)
     ProductName = models.CharField(max_length=255)

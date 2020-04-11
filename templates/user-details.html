@@ -1,0 +1,221 @@
+{% extends 'exts.html' %}
+
+{% block navigation %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="userbar">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">Brand</a>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav mr-auto">
+
+            </ul>
+            <ul class="nav navbar-nav">
+                {% comment %} <li class="nav-item">
+                    <label for="userEmailID" class="form-control">Email ID: </label>
+                </li> {% endcomment %}
+                <form class="form-inline">
+                    <label for="userEmailID" style="color: azure;">Email ID: </label>
+                    <input id="userEmailID" style="margin-left: 5px ;" type="email" name="userEmail" required
+                        aria-placeholder="Enter your email ID: ">
+
+                    <label for="userPasswordID" style="margin-left: 5px; color: azure;">Password: </label>
+                    <input id="userPasswordID" type="password" style="margin-left: 5px;" name="userPassword" required
+                        aria-placeholder="Enter your Password: ">
+
+                    <button class="btn btn-outline-success" id="btn-signin" style="margin-left: 5px ;"
+                        type="submit">Login</button>
+                </form>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+{% endblock %}
+<!-- {% comment %} 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="userbar">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">Brand</a>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav mr-auto">
+
+            </ul>
+            <ul class="nav navbar-nav">
+                {% comment %} <li class="nav-item">
+                    <label for="userEmailID" class="form-control">Email ID: </label>
+                </li> {% endcomment %}
+                <form class="form-inline">
+                    <label for="userEmailID" style="color: azure;">Email ID: </label>
+                    <input id="userEmailID" style="margin-left: 5px ;" type="email" name="userEmail" required
+                        aria-placeholder="Enter your email ID: ">
+
+                    <label for="userPasswordID" style="margin-left: 5px; color: azure;">Password: </label>
+                    <input id="userPasswordID" type="password" style="margin-left: 5px;" name="userPassword" required
+                        aria-placeholder="Enter your Password: ">
+
+                    <button class="btn btn-outline-success" style="margin-left: 5px ;" type="submit">Login</button>
+                </form>
+            </ul>
+        </div>
+    </div>
+
+</nav>  -->
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <p> Sub Text here </p>
+            <section class="ftco-section">
+            </section>
+        </div>
+        <div class="col-md-7">
+            <section class="ftco-section">
+                <h3 class="heading-section"><strong> Create an account </strong> </h3>
+                <p class="subheading">It's better to have account of your choice.</p>
+                <hr>
+                <form method="GET" id="registration-form" class="border border-info" style="padding: 15px;">
+                    <div class="row">
+                        <div class="services-2 ftco-animate d-flex w-50">
+                            <div class="text text-left pl-4">
+                                <p> Enter your firstname: </p>
+                                <input type="text" style="width: 100%;" name="firstname" id="firstname"
+                                    aria-required="true" placeholder="Bharadwaj">
+                            </div>
+                        </div>
+                        <div class="services-2 ftco-animate d-flex w-50">
+                            <div class="text text-left pl-4">
+                                <p> Enter your lastname: </p>
+                                <input type="text" name="lastname" style="width: 100%;" id="lastname"
+                                    aria-required="true" placeholder="M ">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="services-2 ftco-animate d-flex w-100">
+                            <div class="text text-left pl-4">
+                                <p> Enter your Email ID: </p>
+                                <input type="email" name="email" id="emailid" style="width: 100%;" required="true"
+                                    placeholder="tempmail@gmail.com">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="services-2 ftco-animate d-flex w-100">
+                            <div class="text text-left pl-4">
+                                <p> Enter your Password: </p>
+                                <input type="password" name="password" id="passwordid" style="width: 100%;"
+                                    aria-required="true" placeholder="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-self-center">
+                        <button class="btn btn-primary" id="btnsignup">Sign up</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+    </div>
+    <div class="modal" role="dialog" id="vcmodal">
+        <div class="modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> <strong>Confirm your email address </strong></h5>
+                </div>
+
+                <div class="modal-body">
+                    <p> An automated code has been generated for the registered email address. Please confirm the code
+                        below.</p>
+                    <p> Verification Code: <input type="text" name="verificationCode" id="vcode" placeholder="#####">
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="codemsg" value="">
+                    <div class="alert hidden" id="vcmsg"> </div>
+                    <button type="button" id="confirmCode" class="btn btn-primary"> Confirm </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+
+<script>
+    //AJAX calls
+    $(document).ready(function () {
+        $("#confirmCode").click(function (e) {
+            console.log("Clicked me");
+            var code = $("#vcode").val();
+            console.log($("#codemsg").val());
+            document.getElementById("vcmsg").classList.remove("hidden");
+            if ($("#codemsg").val() == code) {
+                document.getElementById("vcmsg").classList.add("alert-success");
+                document.getElementById("vcmsg").innerHTML = "Verified.";
+            } else {
+                document.getElementById("vcmsg").classList.add("alert-fail");
+                document.getElementById("vcmsg").innerHTML = "Check again.";
+            }
+        });
+
+        $("#btn-signin").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "query/signin",
+                data: {
+                    username: $('#userEmailID').val(),
+                    password: $('#userPasswordID').val()
+                },
+                success: function (result) {
+                    if (result.is_taken) {
+                       alert("Successful login");
+                    } else {
+                        throw error
+                    }
+                },
+                error: function (result) {
+                    var element_si = document.getElementById('si-result');
+                    element_si.classList.add('alert-fail');
+                    element_si.innerHTML =
+                        "Something came up with server. Try again later";
+                }
+            });
+        });
+
+        $("#btnsignup").click(function (e) {
+            e.preventDefault();
+            var form_values = {};
+            $("#registration-form").find('input').each(function () {
+                form_values[this.name] = this.value;
+            });
+            $.ajax({
+                type: "GET",
+                url: 'query/signup',
+                data: form_values,
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    if (result.is_taken) {
+                        document.getElementById('codemsg').value = result.verificationCode;
+                        $('#vcmodal').modal('show');
+                    } else {
+                        throw error
+                    }
+                },
+                error: function (result) {
+                    var element_si = document.getElementById('su-result');
+                    element_si.classList.add('alert-fail');
+                    element_si.innerHTML =
+                        "Something came up with server. Try again later";
+                }
+            });
+        });
+
+    });
+
+</script>
+{% endblock js %}

@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from common.models import Product
-
+from common.models import Product, User
 import ast
 
-# Create your views here.
+   
 def index(request):
-    id_value = str(request.GET['id'])
+    id_value = str(request.GET.get('id'))
     product_details = Product.objects.get(ProductId = id_value)
     p_features = ast.literal_eval(product_details.ProductShortDesc)['features']
     p_extra_features = ast.literal_eval(product_details.ProductLongDesc)
