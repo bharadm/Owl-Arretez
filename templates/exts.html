@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
+  {% load static %}
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,60 +31,8 @@
     <title>Owl Shops</title>
   </head>
 
-  <body style="height: 1000px">
-    {% block navigation %}
-    {% comment %} <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topbar">
-      <div class="container-fluid">
-        <a href="#" class="navbar-brand">Brand</a>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav mr-auto">
-            <!-- <li class="nav-item active">
-              <a href="#" >Temp name</a></li>
-              <li class="nav-item dropdown">
-                <a href="#" class="dropdown-toggle" style="padding: 10px">Sign up</a>
-                <div class="dropdown-menu">
-                  <a href="#" class="dropdown-item">User Account</a>
-                  <a href="#" class="dropdown-item">Settings</a>
-                  <a href="#" class="dropdown-item">Sign Out</a>
-                </div>
-              </li> -->
-          </ul>
-          <ul class="nav navbar-nav">
-            <li class="nav-item dropdown">
-              <a href="#" class="dropdown-item dropdown-toggle" style="padding: 10px">Profile</a>
-              <div class="dropdown-menu dropdown-menu-right">
-                {% if user_details %}
-                <a href="#" class="dropdown-item">User Account</a>
-                <a href="#" class="dropdown-item">Settings</a>
-                <a href="#" class="dropdown-item">Sign Out</a>
-                {% else %}
-                <a href="/login" class="dropdown-item-text">Login in</a>
-              </div>
-              {% endif %}
-            </li>
-            <li class="nav-item"><a href="#" class="nav-link" style="padding: 10px">Cart</a></li>
-          </ul>
-        </div>
-    </nav>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
-      <div class="container">
-        <div class="row m-auto">
-          <div class="col-12 w-100 text-center">
-            <div class="collapse navbar-collapse" id="ftco-nav">
-              <ul class="navbar-nav m-auto">
-                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">Category</a></li>
-                <li class="nav-item"><a href="trainer.html" class="nav-link">Best Sellers</a></li>
-                <li class="nav-item"><a href="classes.html" class="nav-link">New Releases</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav> {% endcomment %}
-    {% endblock navigation %}
-    {% comment %} {% else %}
+  {% comment %} <body style="height: 1000px">
+    {% if navigation is None %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topbar">
       <div class="container-fluid">
         <a href="#" class="navbar-brand">Brand</a>
@@ -133,8 +82,15 @@
           </div>
         </div>
       </div>
-    </nav>  {% endcomment %}
-  
+    </nav>
+
+    {% else %} {% endcomment %}
+    {% block navigation %}
+    {% endblock navigation %}
+{% comment %}     
+
+    {% endif %} {% endcomment %}
+
     <!-- END nav -->
     {% block body %}{% endblock %}
 

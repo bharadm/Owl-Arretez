@@ -153,6 +153,17 @@
             console.log($("#codemsg").val());
             document.getElementById("vcmsg").classList.remove("hidden");
             if ($("#codemsg").val() == code) {
+                $.ajax({
+                    type: "GET",
+                    url: "query/confirmation",
+                    data: {
+                        user: getCookie('userMail'),
+                        confirmation : true
+                    },
+                    success: function(){
+                        window.location.href("/login")
+                    }
+                });
                 document.getElementById("vcmsg").classList.add("alert-success");
                 document.getElementById("vcmsg").innerHTML = "Verified.";
             } else {
@@ -173,15 +184,13 @@
                 success: function (result) {
                     if (result.is_taken) {
                        alert("Successful login");
+                       
                     } else {
-                        throw error
+                        alert("Failure");
                     }
                 },
                 error: function (result) {
-                    var element_si = document.getElementById('si-result');
-                    element_si.classList.add('alert-fail');
-                    element_si.innerHTML =
-                        "Something came up with server. Try again later";
+                    alert("Login failure");
                 }
             });
         });
@@ -199,18 +208,7 @@
                 dataType: 'json',
                 success: function (result) {
                     console.log(result);
-                    if (result.is_taken) {
-                        document.getElementById('codemsg').value = result.verificationCode;
-                        $('#vcmodal').modal('show');
-                    } else {
-                        throw error
-                    }
-                },
-                error: function (result) {
-                    var element_si = document.getElementById('su-result');
-                    element_si.classList.add('alert-fail');
-                    element_si.innerHTML =
-                        "Something came up with server. Try again later";
+                    
                 }
             });
         });

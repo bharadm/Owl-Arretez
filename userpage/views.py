@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from common.models import User
+#from common.models import User
+from django.contrib.auth.models import auth, User
 
 from django.views.generic.edit  import CreateView
 from django.http import JsonResponse
@@ -23,10 +24,12 @@ class UserLogin(CreateView):
             username = request.GET.get('username')
             password = request.GET.get('password')
             try:
-                userDetails = User.objects.filter(UserEmail = username, UserPassword= password).exists()
-                data = {
-                    'is_taken' : True
-                }
+                userDetails = auth.authentication(username = username, password= password)
+                if userDetails is not None:
+                    auth.login(request, userDetails)
+                    data = {
+                        'is_taken' : True
+                    }
             except:
                 data = {
                     'is_taken' : False
@@ -43,13 +46,14 @@ class UserRegistration(CreateView):
         lastname = request.GET.get('lastname')
         email = request.GET.get('email')
         password = request.GET.get('password')
-        verification_code = generateOTP()
+        #verification_code = generateOTP()
         try:
-            userDetails = User.objects.create(UserFirstName = username, UserLastName = lastname, UserEmail = email, UserPassword = password, UserVerificationCode = verification_code)
+            userDetails = User.objects.create_user(first_name = username, last_name = lastname, username = email, password = password)
+            userDetails.save()
             data = {
-                'is_taken' : True,
-                'verificationCode' : verification_code
+                'is_taken' : True
             }
+            
         except:
             data = {
                 'is_taken' : False
