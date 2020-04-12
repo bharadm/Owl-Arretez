@@ -28,6 +28,7 @@ class Product(models.Model):
     ProductShortDesc = models.TextField()
     ProductLongDesc = models.TextField()
     ProductQNA = models.TextField()
+    ProductUserReviews = models.TextField()
     ProductThumb = models.CharField(max_length=255)
     ProductImage = models.CharField(max_length=255)
     ProductImage1 = models.CharField(max_length=255)

@@ -10,4 +10,5 @@ def index(request):
     p_extra_features = ast.literal_eval(product_details.ProductLongDesc)
     # p_qna = list(product_details.ProductQNA)
     p_qna = ast.literal_eval(product_details.ProductQNA)
-    return render(request, "item.html", {'prod_details' : product_details, 'features' : p_features, 'e_features' : p_extra_features, 'p_qna' : p_qna})
+    p_unr = ast.literal_eval(product_details.ProductUserReviews)
+    return render(request, "item.html", {'prod_details' : product_details, 'features' : p_features, 'e_features' : p_extra_features, 'p_qna' : p_qna, 'p_unr' : p_unr})

@@ -4,6 +4,10 @@ import time
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 import sqlite3
 import psycopg2
@@ -13,26 +17,46 @@ class AmazonOperation:
     def __init__(self):
         self.cf_variable = configparser.ConfigParser()
         self.cf_variable.read('E:\Codecs\pyprojects\Owl-Arretez\extras\data-config.txt')
+        chrome_options = Options()
         self.web_location = self.cf_variable["general"]["webdriver"]
-        self.driver = webdriver.Chrome(self.web_location)
+        chrome_options.add_argument("--start-maximized")
+        #chrome_options.add_argument('headless');
 
+        self.driver = webdriver.Chrome(self.web_location, options= chrome_options)
+    
     # Get the product ASIN and href links
     def get_list_of_urls(self):
 
         page_url = self.cf_variable.get("general", "a-url")
         asin_xpath = self.cf_variable.get("general", "asin-id")
         href_xpath = self.cf_variable.get("general", "href-url")
+        thumb_xpath = self.cf_variable.get("general", "item-thumb")
         url_list = []
-        for page_count in range(1,10):
+        
+        for page_count in range(1,2):
             self.driver.get(page_url.replace('#', str(page_count)))
             count = 1
+            # actions = ActionChains(self.driver)
+            # actions.move_to_element(self.driver.find_element_by_id("rhf-container")).perform()
+            
             for div_count in range(1, 10):
-                url_pair = {"ASIN":"", "URL": ""}
+                try:
+                    
+                    print ("Fetching data started...")
+                    url_pair = {"ASIN" : "", "URL": "", "ProductThumb" : ""}
+                    print (asin_xpath.replace("#", str(div_count)))
+                    element = WebDriverWait(self.driver, 4).until(EC.presence_of_element_located((By.XPATH, asin_xpath.replace("#", str(div_count)))))
+                    url_pair["ASIN"] = self.driver.find_element_by_xpath(asin_xpath.replace("#", str(div_count))).get_attribute('data-asin')
+                    url_pair["URL"] = self.driver.find_element_by_xpath(href_xpath.replace("#", str(div_count))).get_attribute('href')
+                    url_pair["ProductThumb"] = self.driver.find_element_by_xpath(thumb_xpath.replace("#", str(div_count))).get_attribute('src')
+
+                    print (url_pair)            
+                    if "ssoredirect" not in url_pair["URL"]:
+                        url_list.append(url_pair)
+                except Exception as e:
+                    print ("Exception occured", e)
+                    pass
                 
-                url_pair["ASIN"] = self.driver.find_element_by_xpath(asin_xpath.replace("#", str(div_count))).get_attribute('data-asin')
-                url_pair["URL"] = self.driver.find_element_by_xpath(href_xpath.replace("#", str(div_count))).get_attribute('href')
-                if "ssoredirect" not in url_pair["URL"]:
-                    url_list.append(url_pair)
         return url_list
     
     def open_product_by_href(self, url_list):
@@ -41,9 +65,9 @@ class AmazonOperation:
             try:
                 product_collection = {"ProductId" : "", "ProductName" : "", "ProductPrice" : "", "ProductCartDesc" : "", "ProductShortDesc" : "",
                         "ProductLongDesc" : "", "ProductQNA" : "", "ProductImage" : "", "ProductImage1" : "", "ProductImage2" : "", "ProductImage3" : "",
-                        "ProductCategoryId" : "", "ProductUpdateDate" : ""}
+                        "ProductCategoryId" : "", "ProductUpdateDate" : "", "ProductThumb" : ""}
                 self.driver.get(product_item["URL"])
-                time.sleep(2.5)
+                time.sleep(4)
                 product_collection["ProductId"] = str(product_item["ASIN"])
                 product_collection["ProductName"] = self.driver.find_element_by_xpath(self.cf_variable.get("product-details","p-title")).text
                 product_collection["ProductShortDesc"] = str(self.product_short_description(self.cf_variable.get("product-details","p-short-des")))
@@ -55,6 +79,11 @@ class AmazonOperation:
                 product_collection["ProductImage3"] = str(self.product_image_path(self.cf_variable.get("image-path", "image4")))
                 product_collection["ProductUpdateDate"] = str(self.driver.find_element_by_xpath(self.cf_variable.get("product-details", "p-data-a")).text)
                 
+                product_collection["ProductThumb"] = product_item["ProductThumb"]
+                if self.hasId(self.cf_variable.get("product-details", "p-prod-des")):
+                    product_collection["ProductCartDesc"] = str(self.driver.find_element_by_id(self.cf_variable.get("product-details", "p-prod-des")).find_element_by_tag_name('p').text)
+                
+                product_collection["ProductUserReviews"] = str(self.product_u_n_reviews(self.cf_variable.get("product-details", "p-user-reviews")))
                 product_collection_list.append(product_collection)
 
                 time.sleep(4)
@@ -127,11 +156,45 @@ class AmazonOperation:
         except:
             return False
     
+    def hasId(self, id):
+        try:
+            self.driver.find_element_by_id(id)
+            return True
+        except:
+            return False
+    
     def product_image_path(self, image_xpath):
         try:
             return self.driver.find_element_by_xpath(image_xpath).get_attribute('src')
         except:
             return ""
+
+    def product_u_n_reviews(self, p_user_div_path):
+        actions = ActionChains(self.driver)
+        actions.move_to_element(self.driver.find_element_by_id("reviewsMedley")).perform()
+        time.sleep(2)
+        user_ids = []
+        for items in self.driver.find_element_by_xpath(p_user_div_path).find_elements_by_tag_name('div'):
+            if "customer_review-" in items.get_attribute('id'):
+                user_ids.append(str(items.get_attribute('id')))
+
+        p_user_list = []
+        
+        for div_items in user_ids:
+            p_user = {"user" : "", "userreview" : "", "userhelpful": "", "userrating" : ""}
+            person_id = div_items
+            p_user["user"] = self.driver.find_element_by_xpath("//*[@id=\""+person_id+"\"]/div[1]/a/div[2]/span").text
+            p_user["userreview"] = self.driver.find_element_by_xpath("//*[@id=\""+person_id+"\"]/div[4]/span/div/div[1]/span").text
+            p_user["userhelpful"] = self.driver.find_element_by_xpath("//*[@id=\""+person_id+"\"]/div[2]/a[1]/i/span").text
+            if self.hasXpath("//*[@id=\""+person_id+"\"]/div[5]/span[1]/div[1]/span"):
+                p_user["userrating"] = self.driver.find_element_by_xpath("//*[@id=\""+person_id+"\"]/div[5]/span[1]/div[1]/span").text
+            else:
+                p_user["userrating"] = self.driver.find_element_by_xpath("//*[@id=\""+person_id+"\"]/div[7]/span[1]/div[1]/span").text
+                
+            #print (p_user)
+            p_user_list.append(p_user)
+       
+        return p_user_list
 
 class Database:
 

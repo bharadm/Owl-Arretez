@@ -1,8 +1,10 @@
 [general]
-webdriver = E:\Codecs\Office works\chromedriver_win32_v80\chromedriver.exe
-a-url = https://www.amazon.in/s?k=mobiles&page=#&ref=sr_pg_#
-asin-id = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[#]
-href-url = //*[@id="search"]/div[1]/div[2]/div/span[4]/div[1]/div[#]/div/span/div/div/div[2]/div[1]/div/div/span/a
+webdriver = E:\Codecs\Office works\chromedriver_win32_v81\chromedriver.exe
+a-url = https://www.amazon.in/s?k=mobiles&page=#
+main-dev = //*[@id="search"]/div[1]/div[1]/div/span[4]/div[1]
+asin-id = //*[@id="search"]/div[1]/div[1]/div/span[4]/div[1]/div[#]
+href-url = //*[@id="search"]/div[1]/div[1]/div/span[4]/div[1]/div[#]/div/span/div/div/div[2]/div[1]/div/div/span/a
+item-thumb = //*[@id="search"]/div[1]/div[1]/div/span[4]/div[1]/div[#]/div/span/div/div/div[2]/div[1]/div/div/span/a/div/img
 
 [image-path]
 image1 = //*[@id="a-autoid-3-announce"]/img
@@ -15,6 +17,7 @@ p-id = //*[@id="prodDetails"]/div/div[2]/div[1]/div[2]/div/div/table/tbody/tr[1]
 p-title = //*[@id="productTitle"]
 p-short-des = //*[@id="feature-bullets"]/ul
 p-short-des-li = //*[@id="feature-bullets"]/ul/li[#]/span
+p-prod-des = productDescription
 p-long-des = //*[@id="prodDetails"]/div/div[1]/div[1]/div[2]/div/div/table/tbody
 p-long-des-tr = //*[@id="prodDetails"]/div/div[1]/div[1]/div[2]/div/div/table/tbody/tr[#]/td[^^]
 p-qna = //*[@id="ask-btf-container"]/div/div/div[2]/span/div
@@ -27,3 +30,4 @@ p-cf-name = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[1]/a/div[2]/span
 p-cf-device = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[3]/span[1]
 p-cf-comments = //*[@id="customer_review-R3RNVI0L5WS9SW"]/div[4]/span/div/div[1]/span
 p-data-a = //*[@id="prodDetails"]/div/div[2]/div[1]/div[2]/div/div/table/tbody/tr[4]/td[2]
+p-user-reviews = //*[@id="reviewsMedley"]/div/div[2]/div/div[2]/span[3]/div/div/div[3]/div[3]
