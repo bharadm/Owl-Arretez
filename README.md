@@ -15,7 +15,7 @@ It's an ecommerce factory with django - python integration for educational purpo
 * Database migration. TBD
 
 # Changelog 11-04-2020
-* Added support for User Registration and login.accordion
+* Added support for User Registration and login.
 * Few alternations to navigation has been imposed.
 * Filtering of blocks and new templates added.
 
