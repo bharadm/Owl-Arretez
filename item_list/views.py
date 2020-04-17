@@ -7,4 +7,5 @@ from django.http import JsonResponse
 def list(request):
     #category_value = request.GET.get('c')
     product_list = Product.objects.all()
-    return render(request, "item-list.html", {'product_list' : product_list})
+    user_id = request.session.get("user")
+    return render(request, "item-list.html", {'user_id': user_id, 'product_list' : product_list})

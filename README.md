@@ -10,9 +10,14 @@ It's an ecommerce factory with django - python integration for educational purpo
 * Frameworks: Django, pycorg2, beautifulsoup4, selenium etc,.
 
 # MileStone
-* Database all columns utilised : Product.
+* Database all columns utilised : Product. UserCart.
 * User functionality. TBD
 * Database migration. TBD
+
+# Changelog 17-04-2020
+* Added cart support. Items can added to cart.
+* Existing user can add to cart functionality implemented.
+
 
 # Changelog 11-04-2020
 * Added support for User Registration and login.

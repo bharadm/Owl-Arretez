@@ -33,30 +33,30 @@ class AmazonOperation:
         thumb_xpath = self.cf_variable.get("general", "item-thumb")
         url_list = []
         
-        for page_count in range(1,2):
+        for page_count in range(1,3):
             self.driver.get(page_url.replace('#', str(page_count)))
             count = 1
             # actions = ActionChains(self.driver)
             # actions.move_to_element(self.driver.find_element_by_id("rhf-container")).perform()
-            
+            time.sleep(4)
             for div_count in range(1, 10):
                 try:
                     
                     print ("Fetching data started...")
                     url_pair = {"ASIN" : "", "URL": "", "ProductThumb" : ""}
-                    print (asin_xpath.replace("#", str(div_count)))
+                    #print (asin_xpath.replace("#", str(div_count)))
                     element = WebDriverWait(self.driver, 4).until(EC.presence_of_element_located((By.XPATH, asin_xpath.replace("#", str(div_count)))))
                     url_pair["ASIN"] = self.driver.find_element_by_xpath(asin_xpath.replace("#", str(div_count))).get_attribute('data-asin')
                     url_pair["URL"] = self.driver.find_element_by_xpath(href_xpath.replace("#", str(div_count))).get_attribute('href')
                     url_pair["ProductThumb"] = self.driver.find_element_by_xpath(thumb_xpath.replace("#", str(div_count))).get_attribute('src')
 
-                    print (url_pair)            
+                    #print (url_pair)            
                     if "ssoredirect" not in url_pair["URL"]:
                         url_list.append(url_pair)
                 except Exception as e:
                     print ("Exception occured", e)
                     pass
-                
+            self.driver.delete_all_cookies()
         return url_list
     
     def open_product_by_href(self, url_list):
@@ -86,10 +86,10 @@ class AmazonOperation:
                 product_collection["ProductUserReviews"] = str(self.product_u_n_reviews(self.cf_variable.get("product-details", "p-user-reviews")))
                 product_collection_list.append(product_collection)
 
-                time.sleep(4)
+                time.sleep(8)
                 
             except Exception as e:
-                print (str(e), product_collection)
+                #print (str(e), product_collection)
                 self.driver.quit()   
 
         self.driver.quit()   
@@ -165,7 +165,8 @@ class AmazonOperation:
     
     def product_image_path(self, image_xpath):
         try:
-            return self.driver.find_element_by_xpath(image_xpath).get_attribute('src')
+            img_value = self.driver.find_element_by_xpath(image_xpath).get_attribute('src')
+            return img_value.replace("38","280").replace("50","300")
         except:
             return ""
 

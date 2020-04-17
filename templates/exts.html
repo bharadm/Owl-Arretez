@@ -31,8 +31,8 @@
     <title>Owl Shops</title>
   </head>
 
-  {% comment %} <body style="height: 1000px">
-    {% if navigation is None %}
+  <body style="height: 1000px">
+    {% if user_id is not None %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topbar">
       <div class="container-fluid">
         <a href="#" class="navbar-brand">Brand</a>
@@ -53,7 +53,7 @@
             <li class="nav-item dropdown">
               <a href="#" class="dropdown-item dropdown-toggle" style="padding: 10px">Profile</a>
               <div class="dropdown-menu dropdown-menu-right">
-                {% if user_details %}
+                {% if user_id %}
                 <a href="#" class="dropdown-item">User Account</a>
                 <a href="#" class="dropdown-item">Settings</a>
                 <a href="#" class="dropdown-item">Sign Out</a>
@@ -62,7 +62,7 @@
               </div>
               {% endif %}
             </li>
-            <li class="nav-item"><a href="#" class="nav-link" style="padding: 10px">Cart</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" style="padding: 10px">Cart <span id="item-cart"> </span></a></li>
           </ul>
         </div>
     </nav>
@@ -84,12 +84,28 @@
       </div>
     </nav>
 
-    {% else %} {% endcomment %}
+    {% else %}
     {% block navigation %}
     {% endblock navigation %}
-{% comment %}     
-
-    {% endif %} {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <div class="row m-auto">
+          <div class="col-12 w-100 text-center">
+            <div class="collapse navbar-collapse" id="ftco-nav">
+              <ul class="navbar-nav m-auto">
+                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">Category</a></li>
+                <li class="nav-item"><a href="trainer.html" class="nav-link">Best Sellers</a></li>
+                <li class="nav-item"><a href="classes.html" class="nav-link">New Releases</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    {% endif %}
 
     <!-- END nav -->
     {% block body %}{% endblock %}
@@ -196,8 +212,22 @@
     </script>
     <script src="{% static 'js/google-map.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+      function updateCart(){
+        $.ajax(
+          {
+            method: 'GET',
+            url: 'query/getcart',
+            success: function(data){
+              document.getElementById("item-cart").innerHTML = data['count'];
+            }
+          }
+        );
+      }
+    </script>
     {% block js %}
     {% endblock js %}
+  
   </body>
 
 </html>

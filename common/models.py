@@ -39,10 +39,13 @@ class Product(models.Model):
     ProductStock = models.CharField(max_length=255)
     # ProductLocation = models.CharField(max_length=255)
 
-class ProductCategorie(models.Model):
+class ProductCategories(models.Model):
     categoryId = models.CharField(max_length=255)
     categoryName = models.CharField(max_length=255)
 
+class UserCart(models.Model):
+    userID = models.CharField(max_length= 255)
+    cartItems = models.TextField()
 
 class OrderDetails(models.Model):
     DetailId = models.CharField(max_length=255)

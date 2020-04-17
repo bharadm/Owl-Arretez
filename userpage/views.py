@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 #from common.models import User
-from django.contrib.auth.models import auth, User
-
+from django.contrib.auth.models import auth
+from django.contrib.auth.models import User
+from django.contrib import messages
 from django.views.generic.edit  import CreateView
 from django.http import JsonResponse
 # Create your views here.
@@ -21,22 +22,26 @@ def generateOTP() :
 
 class UserLogin(CreateView):
     def get(self, request):
-            username = request.GET.get('username')
-            password = request.GET.get('password')
-            try:
-                userDetails = auth.authentication(username = username, password= password)
-                if userDetails is not None:
-                    auth.login(request, userDetails)
-                    data = {
-                        'is_taken' : True
-                    }
-            except:
-                data = {
-                    'is_taken' : False
+        data_taken = {}
+        username = request.GET['username']
+        password = request.GET['password']
+        try:
+            print (username, password)
+            userDetails = auth.authenticate(username = username, password= password)
+            if userDetails is not None:
+                auth.login(request, userDetails)
+                request.session["user"] = userDetails.id
+                data_taken = {
+                'is_taken' : True
                 }
-            return JsonResponse(data)
+        except Exception as e:
+            print ("Exception is ", e)
+            data_taken = {
+                'is_taken' : False
+            }
+        return JsonResponse(data_taken)
 
-
+           
 # Create your views here.
 class UserRegistration(CreateView):
  

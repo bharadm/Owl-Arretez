@@ -12,7 +12,7 @@
                 {% comment %} <li class="nav-item">
                     <label for="userEmailID" class="form-control">Email ID: </label>
                 </li> {% endcomment %}
-                <form class="form-inline">
+                <form class="form-inline" id="login-form">
                     <label for="userEmailID" style="color: azure;">Email ID: </label>
                     <input id="userEmailID" style="margin-left: 5px ;" type="email" name="userEmail" required
                         aria-placeholder="Enter your email ID: ">
@@ -22,7 +22,7 @@
                         aria-placeholder="Enter your Password: ">
 
                     <button class="btn btn-outline-success" id="btn-signin" style="margin-left: 5px ;"
-                        type="submit">Login</button>
+                        >Login</button>
                 </form>
             </ul>
         </div>
@@ -147,33 +147,10 @@
 <script>
     //AJAX calls
     $(document).ready(function () {
-        $("#confirmCode").click(function (e) {
-            console.log("Clicked me");
-            var code = $("#vcode").val();
-            console.log($("#codemsg").val());
-            document.getElementById("vcmsg").classList.remove("hidden");
-            if ($("#codemsg").val() == code) {
-                $.ajax({
-                    type: "GET",
-                    url: "query/confirmation",
-                    data: {
-                        user: getCookie('userMail'),
-                        confirmation : true
-                    },
-                    success: function(){
-                        window.location.href("/login")
-                    }
-                });
-                document.getElementById("vcmsg").classList.add("alert-success");
-                document.getElementById("vcmsg").innerHTML = "Verified.";
-            } else {
-                document.getElementById("vcmsg").classList.add("alert-fail");
-                document.getElementById("vcmsg").innerHTML = "Check again.";
-            }
-        });
 
         $("#btn-signin").click(function (e) {
             e.preventDefault();
+            
             $.ajax({
                 type: "GET",
                 url: "query/signin",
@@ -184,7 +161,7 @@
                 success: function (result) {
                     if (result.is_taken) {
                        alert("Successful login");
-                       
+                       location.href  = "/index";
                     } else {
                         alert("Failure");
                     }
