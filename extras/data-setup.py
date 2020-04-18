@@ -32,32 +32,32 @@ class AmazonOperation:
         href_xpath = self.cf_variable.get("general", "href-url")
         thumb_xpath = self.cf_variable.get("general", "item-thumb")
         url_list = []
-        
-        for page_count in range(1,3):
-            self.driver.get(page_url.replace('#', str(page_count)))
-            count = 1
-            # actions = ActionChains(self.driver)
-            # actions.move_to_element(self.driver.find_element_by_id("rhf-container")).perform()
-            time.sleep(4)
-            for div_count in range(1, 10):
-                try:
-                    
-                    print ("Fetching data started...")
-                    url_pair = {"ASIN" : "", "URL": "", "ProductThumb" : ""}
-                    #print (asin_xpath.replace("#", str(div_count)))
-                    element = WebDriverWait(self.driver, 4).until(EC.presence_of_element_located((By.XPATH, asin_xpath.replace("#", str(div_count)))))
-                    url_pair["ASIN"] = self.driver.find_element_by_xpath(asin_xpath.replace("#", str(div_count))).get_attribute('data-asin')
-                    url_pair["URL"] = self.driver.find_element_by_xpath(href_xpath.replace("#", str(div_count))).get_attribute('href')
-                    url_pair["ProductThumb"] = self.driver.find_element_by_xpath(thumb_xpath.replace("#", str(div_count))).get_attribute('src')
+        for item in ['mobiles', 'laptop', 'camera']:
+            for page_count in range(1,2):
+                print (page_url.replace('#', str(page_count)).replace('item',str(item)))
+                self.driver.get(page_url.replace('#', str(page_count)).replace('item',str(item)))
+                count = 1
+                # actions = ActionChains(self.driver)
+                # actions.move_to_element(self.driver.find_element_by_id("rhf-container")).perform()
+                time.sleep(6)
+                self.driver.delete_all_cookies()
+                for div_count in range(1, 3):
+                    try:
+                        print ("Fetching data started...")
+                        url_pair = {"ASIN" : "", "URL": "", "ProductThumb" : ""}
+                        #print (asin_xpath.replace("#", str(div_count)))
+                        element = WebDriverWait(self.driver, 4).until(EC.presence_of_element_located((By.XPATH, asin_xpath.replace("#", str(div_count)))))
+                        url_pair["ASIN"] = self.driver.find_element_by_xpath(asin_xpath.replace("#", str(div_count))).get_attribute('data-asin')
+                        url_pair["URL"] = self.driver.find_element_by_xpath(href_xpath.replace("#", str(div_count))).get_attribute('href')
+                        url_pair["ProductThumb"] = self.driver.find_element_by_xpath(thumb_xpath.replace("#", str(div_count))).get_attribute('src')
 
-                    #print (url_pair)            
-                    if "ssoredirect" not in url_pair["URL"]:
-                        url_list.append(url_pair)
-                except Exception as e:
-                    print ("Exception occured", e)
-                    pass
-            self.driver.delete_all_cookies()
-        return url_list
+                        #print (url_pair)            
+                        if "ssoredirect" not in url_pair["URL"]:
+                            url_list.append(url_pair)
+                    except Exception as e:
+                        print ("Exception occured", e)
+                        pass
+            return url_list
     
     def open_product_by_href(self, url_list):
         product_collection_list = []
@@ -73,10 +73,8 @@ class AmazonOperation:
                 product_collection["ProductShortDesc"] = str(self.product_short_description(self.cf_variable.get("product-details","p-short-des")))
                 product_collection["ProductLongDesc"] = str(self.product_long_description(self.cf_variable.get("product-details","p-long-des")))
                 product_collection["ProductQNA"] = str(self.product_q_n_a(self.cf_variable.get("product-details","p-qna")))
-                product_collection["ProductImage"] = str(self.product_image_path(self.cf_variable.get("image-path", "image1")))
-                product_collection["ProductImage1"] = str(self.product_image_path(self.cf_variable.get("image-path", "image2")))
-                product_collection["ProductImage2"] = str(self.product_image_path(self.cf_variable.get("image-path", "image3")))
-                product_collection["ProductImage3"] = str(self.product_image_path(self.cf_variable.get("image-path", "image4")))
+                product_collection = self.product_image_path(product_collection, self.cf_variable.get("image-path", "image"))
+                #print (product_collection)
                 product_collection["ProductUpdateDate"] = str(self.driver.find_element_by_xpath(self.cf_variable.get("product-details", "p-data-a")).text)
                 
                 product_collection["ProductThumb"] = product_item["ProductThumb"]
@@ -89,7 +87,7 @@ class AmazonOperation:
                 time.sleep(8)
                 
             except Exception as e:
-                #print (str(e), product_collection)
+                print (str(e), product_collection)
                 self.driver.quit()   
 
         self.driver.quit()   
@@ -163,12 +161,24 @@ class AmazonOperation:
         except:
             return False
     
-    def product_image_path(self, image_xpath):
-        try:
-            img_value = self.driver.find_element_by_xpath(image_xpath).get_attribute('src')
-            return img_value.replace("38","280").replace("50","300")
-        except:
-            return ""
+    def product_image_path(self, product_collection, image_xpath):
+        value = 0
+        image_ids = []
+        for image_item in self.driver.find_elements_by_css_selector('li.a-spacing-small.item.imageThumbnail.a-declarative'):
+            image_ids.append("//*[@id=\""+image_item.find_element_by_css_selector('span>span').get_attribute('id')+"-announce\"]/img")
+
+        for image_xpath_item in image_ids:
+            try:
+                img_value = str(self.driver.find_element_by_xpath(image_xpath_item).get_attribute('src'))
+                if "play-icon" not in img_value and value<5:
+                    product_collection["ProductImage"+str(value if (value!=0) else '')] = img_value.replace(str(38),str(280)).replace(str(50),str(300))
+                    value = value + 1
+            except Exception as e:
+                print (e)
+                pass
+        
+        return product_collection
+        
 
     def product_u_n_reviews(self, p_user_div_path):
         actions = ActionChains(self.driver)
