@@ -56,13 +56,18 @@
                 {% if user_id %}
                 <a href="#" class="dropdown-item">User Account</a>
                 <a href="#" class="dropdown-item">Settings</a>
-                <a href="#" class="dropdown-item">Sign Out</a>
+                <a href="/logout" class="dropdown-item">Sign Out</a>
                 {% else %}
                 <a href="/login" class="dropdown-item-text">Login in</a>
               </div>
               {% endif %}
             </li>
-            <li class="nav-item"><a href="#" class="nav-link" style="padding: 10px">Cart <span id="item-cart"> </span></a></li>
+            <li class="nav-item dropdown">
+              <a onclick="getCartItems(); return false;" href="#" class="dropdown-item dropdown-toggle" style="padding: 10px">Cart <span id="item-cart">
+                </span></a>
+              <div class="dropdown-menu dropdown-menu-right" id="cartItems" style="width: auto;">
+              </div>
+            </li>
           </ul>
         </div>
     </nav>
@@ -104,7 +109,7 @@
         </div>
       </div>
     </nav>
-    
+
     {% endif %}
 
     <!-- END nav -->
@@ -213,21 +218,42 @@
     <script src="{% static 'js/google-map.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script>
-      function updateCart(){
-        $.ajax(
-          {
-            method: 'GET',
-            url: 'query/getcart',
-            success: function(data){
+      $(document).ready(function () {
+        updateCart();
+        getCartItems();
+      });
+
+      function updateCart() {
+        $.ajax({
+          method: 'GET',
+          url: 'query/getcart',
+          success: function (data) {
+            console.log(data);
+            if (data['count']>0){
               document.getElementById("item-cart").innerHTML = data['count'];
+              getCartItems();
             }
           }
-        );
+        });
+      }
+
+      function getCartItems(){
+        $.ajax({
+          method: 'GET',
+          url: 'query/getcartitems',
+          success: function (data){
+            if (data.status){
+              $("#cartItems").html(data['element']);
+            }else{
+              $("#cartItems").html("<p> Add items to cart </p>");
+            }
+          }
+        })
       }
     </script>
     {% block js %}
     {% endblock js %}
-  
+
   </body>
 
 </html>

@@ -11,8 +11,11 @@ It's an ecommerce factory with django - python integration for educational purpo
 
 # MileStone
 * Database all columns utilised : Product. UserCart.
-* User functionality. TBD
-* Database migration. TBD
+* User functionality: Login, Logout and Cart feature.
+* Database migration: Data insertion is programmed to do.
+
+# Changelog 10-05-2020
+* Project has been discontinued as milestones are meet *
 
 # Changelog 17-04-2020
 * Added cart support. Items can added to cart.
